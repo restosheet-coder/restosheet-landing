@@ -808,12 +808,11 @@
     sel.classList.add('border-brand-600', 'bg-brand-50');
   }
 
-  // Pricing buttons → scroll to checkout + pre-select package
+  // Pricing buttons → go to checkout.html?package=xxx
   document.querySelectorAll('[data-package]').forEach(btn => {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
-      selectPackage(this.dataset.package);
-      document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
+      window.location.href = './checkout.html?package=' + this.dataset.package;
     });
   });
 
