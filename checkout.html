@@ -134,11 +134,35 @@
         </div>
 
         <!-- Phone -->
-        <div class="mb-6">
+        <div class="mb-4">
           <label class="block text-sm font-semibold text-gray-700 mb-2" data-th="เบอร์โทร (ไม่บังคับ)" data-en="Phone (optional)">เบอร์โทร (ไม่บังคับ)</label>
           <input type="tel" id="field-phone"
             class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm transition"
             placeholder="08X-XXX-XXXX">
+        </div>
+
+        <!-- File Language Selector -->
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">
+            <span data-th="ต้องการไฟล์ภาษาไหน?" data-en="Which language for your file?">ต้องการไฟล์ภาษาไหน?</span>
+            <span class="text-brand-600 font-normal ml-1 text-xs" data-th="(เลือกได้ 1 ภาษา)" data-en="(choose one)">(เลือกได้ 1 ภาษา)</span>
+          </label>
+          <div class="grid grid-cols-2 gap-3">
+            <div id="lang-th-card"
+                 class="pkg-card selected border-2 border-brand-600 bg-brand-50 rounded-xl p-4 text-center cursor-pointer"
+                 onclick="selectFileLang('th')">
+              <div class="text-2xl mb-1">🇹🇭</div>
+              <div class="font-bold text-gray-900 text-sm">ภาษาไทย</div>
+              <div class="text-xs text-gray-400 mt-0.5">Thai</div>
+            </div>
+            <div id="lang-en-card"
+                 class="pkg-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer"
+                 onclick="selectFileLang('en')">
+              <div class="text-2xl mb-1">🇬🇧</div>
+              <div class="font-bold text-gray-900 text-sm">English</div>
+              <div class="text-xs text-gray-400 mt-0.5">อังกฤษ</div>
+            </div>
+          </div>
         </div>
 
         <!-- Terms note -->
@@ -562,7 +586,7 @@
         name, email, phone,
         package: pkg.name,
         amount: pkg.price,
-        lang: currentLang,
+        lang: selectedFileLang,   // ภาษาที่ลูกค้าเลือกสำหรับไฟล์
         slip: slipBase64
       })
     }).catch(() => {/* no-cors — ignore */});
@@ -577,6 +601,26 @@
       }
       setStep(3);
     }, 800);
+  }
+
+  // ── File Language Selector ────────────────────────────────
+  let selectedFileLang = 'th'; // default ภาษาไทย
+
+  function selectFileLang(lang) {
+    selectedFileLang = lang;
+    const thCard = document.getElementById('lang-th-card');
+    const enCard = document.getElementById('lang-en-card');
+    if (lang === 'th') {
+      thCard.classList.add('selected', 'border-brand-600', 'bg-brand-50');
+      thCard.classList.remove('border-gray-200');
+      enCard.classList.remove('selected', 'border-brand-600', 'bg-brand-50');
+      enCard.classList.add('border-gray-200');
+    } else {
+      enCard.classList.add('selected', 'border-brand-600', 'bg-brand-50');
+      enCard.classList.remove('border-gray-200');
+      thCard.classList.remove('selected', 'border-brand-600', 'bg-brand-50');
+      thCard.classList.add('border-gray-200');
+    }
   }
 
   // ── Slip Upload ───────────────────────────────────────────
