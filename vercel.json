@@ -4,6 +4,11 @@
       "source": "/product",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/order",
+      "destination": "/checkout.html?source=messenger",
+      "permanent": false
     }
   ]
 }
