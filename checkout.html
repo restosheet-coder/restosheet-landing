@@ -477,6 +477,7 @@
   };
 
   let selectedPackage = 'pro';
+  let purchaseFired = false; // ป้องกัน Pixel Purchase fire ซ้ำ
 
   function selectPackage(pkg) {
     selectedPackage = pkg;
@@ -575,8 +576,12 @@
   }
 
   function confirmPayment() {
+    if (purchaseFired) return;
+    purchaseFired = true;
+
     // Validate slip
     if (!slipBase64) {
+      purchaseFired = false;
       alert(currentLang === 'th'
         ? 'กรุณาแนบสลิปโอนเงินก่อนนะครับ 🙏\n(กดที่กรอบด้านบนเพื่ออัพโหลดรูปสลิป)'
         : 'Please attach your payment slip first 🙏\n(Tap the box above to upload your slip)');
